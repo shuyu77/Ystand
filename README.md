@@ -2,17 +2,17 @@
 课程设计，仿b站项目，实现视频投稿、评论、私信、点赞、用户设置、管理端等模块。
 
 ## 核心技术栈
-后端：
-Spring
-Spring Boot3
-Spring MVC
-ORM：MyBatisplus
-数据库：MySQL 8.0
-安全：Spring Security
+后端：  
+Spring  
+Spring Boot3  
+Spring MVC  
+ORM：MyBatisplus  
+数据库：MySQL 8.0  
+安全：Spring Security  
 
-前端：
-Thymeleaf
-Bootstrap 5
+前端：  
+Thymeleaf  
+Bootstrap 5  
 
 ## 页面展示
 主页  
