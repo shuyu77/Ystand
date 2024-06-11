@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Y-stand</title>
+    <div th:replace="~{common::head(title=~{::title/text()})}"></div>
+    <link rel="stylesheet" th:href="@{/css/video.css}" />
+
+</head>
+<body>
+<div class="video">
+    <div class="left">
+        <div class="video-content">
+            <div class="title" th:text="${video.title}">第N次玩泰拉的我竟成了经验宝宝</div>
+            <div class="bar-data">
+                <div class="bar-data-item">
+                    <i class="bar-data-item-icon iconfont icon-shipin1"></i>
+                    <span th:text="${video.viewCount} ?: '0'">播放数量</span>
+                </div>
+                <div class="bar-data-item">
+                    <i class="bar-data-item-icon iconfont icon-pinglun"></i>
+                    <span th:text="${video.commentCount} ?: '0'">评论数量</span>
+                </div>
+                <div class="bar-data-item">
+                    <span th:text="${#temporals.format(video.createdAt,'yyyy-MM-dd HH:mm:ss')}">2024-05-02 19:00:25</span>
+                </div>
+            </div>
+            <div class="video-container">
+                <video th:src="${video.url}" controls class="video-element"></video>
+            </div>
+<!--            点赞，投币等属性-->
+            <div class="video-data">
+                <div class="video-data-item">
+                    <a th:href="@{/addOrDeleteLike(userId=${video.userId}, videoId=${video.id}, isLike=${user_video.isLike})}">
+                        <i th:class="${user_video.isLike} ?
+                             'video-data-item-icon iconfont icon-icon video-icon' : 'video-data-item-icon iconfont icon-icon'"></i>
+                    </a>
+                    <span th:text="${video.likeCount} ?: '0'"></span>
+                </div>
+                <div class="video-data-item">
+                    <a th:href="@{/addOrDeleteCoin(userId=${video.userId}, videoId=${video.id}, isCoin=${user_video.isCoin})}">
+                        <i th:class="${user_video.isCoin} ?
+                           'video-data-item-icon iconfont icon-toubijihuox-copy video-icon' : 'video-data-item-icon iconfont icon-toubijihuox-copy' "></i>
+                    </a>
+                    <span th:text="${video.coinCount} ?: '0'"></span>
+                </div>
+                <div class="video-data-item">
+                    <a th:href="@{/addOrDeleteCollect(userId=${video.userId}, videoId=${video.id}, isCollect=${user_video.isCollect})}">
+                        <i th:class="${user_video.isCollect} ?
+                            'video-data-item-icon iconfont icon-shoucang1-copy video-icon' : 'video-data-item-icon iconfont icon-shoucang'"></i>
+                    </a>
+                    <span th:text="${video.collectCount} ?: '0'"></span>
+                </div>
+                <div class="video-data-item">
+                    <i class="video-data-item-icon iconfont icon-fenxiang"></i>
+                    <span>分享</span>
+                </div>
+            </div>
+            <div class="video-description" th:text="${video.description}">
+
+            </div>
+        </div>
+        <div class="comment">
+            <div class="comment-top">
+                <div>
+                    评论
+                </div>
+                <span th:text="${video.commentCount} ?: '0'"></span>
+            </div>
+<!--            评论输入框-->
+            <div class="w-100">
+                <form th:action="@{/insertComment}" class="comment-input-bar-form">
+                    <div class="comment-input-bar-form-content">
+                        <input style="display:none;" th:field="*{video.id}">
+                        <input style="display:none;" th:field="*{video.userId}">
+                        <img class="avatar" th:src="${globalUser.avatar}">
+                        <input type="text"
+                               oninput="oninputCommentPublishButton()"
+                               placeholder="wifi连接中......检测到粉丝评论输出电波......" class="comment-input"
+                               id="comment-input" name="content">
+                    </div>
+                    <button id="commentPublishButton" class="publish-button">发布</button>
+                </form>
+            </div>
+<!--            评论列表-->
+            <div class="comment-list">
+                <div class="comment-list-itme" th:each="commentVar:${commentList}">
+                    <div>
+                        <img class="avatar" th:src="${commentVar.avatar}">
+                    </div>
+                    <div class="comment-list-item-content">
+                        <div th:text="${commentVar.userName}">真中蓝</div>
+                        <div th:text="${commentVar.content}">新生，一直没搞明白</div>
+                        <div class="comment-list-item-time">
+                            <div th:text="${#temporals.format(commentVar.createdAt,'yyy-MM-dd HH:mm')}">2024-05-07 00:35</div>
+                            <div id="reply" th:data-t_userId="${commentVar.id}" th:data-t_userName="${commentVar.userName}"
+                                 th:data-t_fatherId="${commentVar.id}"
+                                 onclick="replyClick(this.getAttribute('data-t_userName'), this.getAttribute('data-t_userid'), this.getAttribute('data-t_fatherId'))">回复</div>
+
+                        </div>
+                        <div class="w-100 comment-list-som">
+<!--                            子回复-->
+                            <div class="comment-list-item-som" th:each="commentSonVar:${commentVar.commentSon}">
+                                <img class="avatar-som" th:src="${commentSonVar.avatar}">
+                                <div class="comment-list-item-som-content">
+                                    <div class="comment-list-item-som-content-bar">
+                                        <div class="comment-list-item-som-content-name" th:text="${commentSonVar.userName}">来一杯82年的旺仔牛奶</div>
+                                        <div class="text-primary" th:text="${commentSonVar.toIdUserName}"></div>
+                                        <div th:text="${commentSonVar.content}">建议找其他</div>
+                                    </div>
+                                    <div class="comment-list-item-time">
+                                        <div th:text="${#temporals.format(commentSonVar.createdAt,'yyy-MM-dd HH:mm')}">2024-05-07 00:35</div>
+                                        <div th:data-t_userId="${commentSonVar.id}" th:data-t_userName="${commentSonVar.userName}"
+                                             th:data-t_fatherId="${commentSonVar.rootId}"
+                                             onclick="replyClick(this.getAttribute('data-t_userName'), this.getAttribute('data-t_userid'), this.getAttribute('data-t_fatherId'))">回复</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <form th:action="@{/insertSonComment}" class="comment-input-bar-form">
+                                    <div class="comment-reply" id="comment-reply">
+                                        <div class="comment-input-bar">
+                                            <input style="display:none;" th:field="*{video.id}">
+                                            <input style="display:none;" th:field="*{video.userId}">
+                                            <input style="display:none;" id="fatherId" name="fatherId">
+                                            <input type="text" style="display:none;" id="userIds" name="userIds">
+                                            <img class="avatar" th:src="${globalUser.avatar}">
+                                            <input type="text"
+                                                   oninput="oninputCommentSonPublishButton()"
+                                                   class="reply-input" id="reply-input" name="content">
+                                        </div>
+                                        <button type="submit" id="publishButton" class="publish-button">发布</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="right-top">
+            <img class="avatar" th:src="${users.avatar}">
+            <div class="right-top-data">
+                <div class="right-top-data-name" th:text="${users.nickname}">木鱼与摸鱼</div>
+                <div class="right-top-data-tag" th:text="${users.tag}">简介</div>
+                <div class="right-top-data-btn">关注</div>
+            </div>
+        </div>
+        <div class="right-content">
+            <div>其他视频</div>
+            <div class="video-list" th:each="videoLists:${videoList}">
+                <a th:href="@{/Video(id=${videoLists.id}, userId=${videoLists.userId})}" target="_blank">
+                    <div class="video-list-item" >
+                        <img class="video-image" th:src="${videoLists.thumbnail}">
+                        <div class="rests-video-data">
+                            <div class="rests-video-data-title" th:text="${videoLists.title}">一口气看完世界覅哦啊世界覅哦啊结束佛i</div>
+                            <div class="rests-video-data-name">
+                                <i class="rests-bar-data-item-icon iconfont icon-upzhux"></i>
+                                <span th:text="${videoLists.userName}">逆风笑</span>
+                            </div>
+                            <div class="rests-video-bar-data">
+                                <div class="rests-bar-data-item">
+                                    <i class="rests-bar-data-item-icon iconfont icon-shipin1"></i>
+                                    <span th:text="${videoLists.viewCount} ?: '0'"></span>
+                                </div>
+                                <div class="rests-bar-data-item">
+                                    <i class="rests-bar-data-item-icon iconfont icon-pinglun"></i>
+                                    <span th:text="${videoLists.commentCount} ?: '0'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{'/js/video.js'}"></script>
+</body>
+</html>

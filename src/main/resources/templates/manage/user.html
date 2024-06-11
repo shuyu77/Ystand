@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Y-stand</title>
+    <div th:replace="~{common::head(title=~{::title/text()})}"></div>
+    <link rel="stylesheet" th:href="@{/css/manageHome.css}" />
+    <link rel="stylesheet" th:href="@{/css/manage/user.css}" />
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4550449_gw8mau047bq.css">
+</head>
+<body>
+<div class="manage">
+    <div th:replace="common::manageMenu(true)"></div>
+    <div class="right">
+        <div th:replace="common :: topMenu"></div>
+
+        <div class="right-content">
+            <div class="card_content">
+                <div class="add-content">
+                    <div>用户管理</div>
+                    <button class="add-button" onclick="openForm('iOrUForm')">添加</button>
+                </div>
+                <div class="specific-content">
+                    <table class="tables" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>账号</th>
+                            <th>密码</th>
+                            <th>名称</th>
+                            <th>生日</th>
+                            <th>性别</th>
+                            <th>电话</th>
+                            <th>头像</th>
+                            <th>个性签名</th>
+                            <th>注册时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user:${page.records}">
+                            <th th:text="${user.id}">123</th>
+                            <th th:text="${user.account}">shuyu</th>
+                            <th th:text="${user.password}"></th>
+                            <th th:text="${user.nickname}"></th>
+                            <th th:text="${user.birth}"></th>
+                            <th th:text="${user.sex == 'man'} ? '男' : '女'"></th>
+                            <th th:text="${user.phone}"></th>
+                            <th>
+                                <img class="table_images" width="100" height="100" th:src="${user.avatar}">
+                            </th>
+                            <th th:text="${user.tag}"></th>
+                            <th th:text="${#temporals.format(user.createdAt,'yyy-MM-dd HH:mm')}"></th>
+                            <th class="">
+                                <a class="updatebtn icon-bianji iconfont" th:onclick="openFormUpdate(this.getAttribute('data-t_id'))"
+                                   th:data-t_id="${user}" ></a>
+                                <a class="deletebtn icon-shanchu iconfont" th:href="@{/deleteUser(id=${user.id})}"></a>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="hr" />
+
+            <div th:replace="common :: pages(toUser)"></div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay" style="display: none"></div>
+<div class="form-popup" id="iOrUForm" style="display: none">
+    <div class="form-content">
+        <span class="close" id="close-btn">&times;</span>
+        <form th:action="@{/insertOrUpdateUser}" th:object="${user}" method="post" enctype="multipart/form-data">
+            <div class="form-group-all">
+                <div class="form-group" style="display:none;">
+                    <input class="form-input" type="text" th:field="*{id}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">账&emsp;&emsp;号 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入账号" th:field="*{account}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">密&emsp;&emsp;码 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入密码" name="password" th:field="*{password}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">名&emsp;&emsp;称 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入名称" th:field="*{nickname}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">生&emsp;&emsp;日 ：</div>
+                    <input class="form-input" type="date" name="start_time" value="" placeholder="请输入生日" th:field="*{birth}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">性&emsp;&emsp;别 ：</div>
+                    <select class="form-input" th:field="*{sex}">
+                        <option value="man">男</option>
+                        <option value="woman">女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="font-line">电&emsp;&emsp;话 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入电话" th:field="*{phone}">
+                </div>
+                <div class="form-group images">
+                    <div class="font-line">头&emsp;&emsp;像 ：</div>
+                    <!--                        先上传头像再回调-->
+                    <img class="images" width="100px" height="80px" th:src="@{${filename}}" onclick="openFile()" id = "image">
+                    <input type="file" name="file" accept="image/*" style="display: none;" th:field="*{avatar}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">个性签名 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入个性签名" th:field="*{tag}">
+                </div>
+            </div>
+            <span th:text="${msg}" style="color:red" ></span><br/>
+            <div class="btn-group">
+                <button type="button" class="btn btn-light" onclick="clearForm()">清空</button>
+                <button type="submit" class="btn btn-info" onclick="submitForm()">确定</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{'/js/manageHome.js'}"></script>
+<script th:src="@{'/js/manage/user.js'}"></script>
+</body>
+</html>

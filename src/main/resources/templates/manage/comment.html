@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Y-stand</title>
+    <div th:replace="~{common::head(title=~{::title/text()})}"></div>
+    <link rel="stylesheet" th:href="@{/css/manageHome.css}" />
+</head>
+<body>
+<div class="manage">
+    <div th:replace="common::manageMenu(true)"></div>
+    <div class="right">
+        <div th:replace="common::topMenu"></div>
+
+        <div class="right-content">
+            <div class="card_content" id="menu-item4-comment">
+                <div class="add-content">
+                    <div>评论管理</div>
+                    <button class="add-button" onclick="openForm('iOrUForm')">添加</button>
+                </div>
+                <div class="specific-content">
+                    <table class="tables" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>视频id</th>
+                            <th>用户id</th>
+                            <th>内容</th>
+                            <!-- <th>点赞数</th> -->
+                            <th>父对象</th>
+                            <th>回复对象</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="comment:${page.records}">
+                            <th th:text="${comment.id}">123</th>
+                            <th th:text="${comment.videoId}">shuyu</th>
+                            <th th:text="${comment.userId}"></th>
+                            <th th:text="${comment.content}"></th>
+                            <th th:text="${comment.rootId}"></th>
+                            <th th:text="${comment.toId}"></th>
+                            <th th:text="${#temporals.format(comment.createdAt,'yyy-MM-dd HH:mm')}"></th>
+                            <th class="">
+                                <a class="updatebtn icon-bianji iconfont" th:onclick="openFormUpdate(this.getAttribute('data-t_id'))"
+                                   th:data-t_id="${comment}" ></a>
+                                <a class="deletebtn icon-shanchu iconfont" th:href="@{/deleteComment(id=${comment.id},videoId=${comment.videoId})}"></a>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="hr" />
+
+            <div th:replace="common :: pages(toComment)"></div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay" style="display: none"></div>
+<div class="form-popup" id="iOrUForm" style="display: none">
+    <div class="form-content">
+        <span class="close" id="close-btn">&times;</span>
+        <form th:action="@{/insertOrUpdateComment}" th:object="${comment}" method="post" enctype="multipart/form-data">
+            <div class="form-group-all">
+                <div class="form-group" style="display:none;">
+                    <input class="form-input" type="text" th:field="*{id}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">&emsp;视频id ：</div>
+                    <input class="form-input" type="text" placeholder="请输入视频id" th:field="*{videoId}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">&emsp;用户id ：</div>
+                    <input class="form-input" type="text" placeholder="请输入用户id" name="password" th:field="*{userId}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">&emsp;&emsp;内容 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入内容" th:field="*{content}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">&emsp;父对象 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入父节点" th:field="*{rootId}">
+                </div>
+                <div class="form-group">
+                    <div class="font-line">回复对象 ：</div>
+                    <input class="form-input" type="text" placeholder="请输入回复对象" th:field="*{toId}">
+                </div>
+            </div>
+            <span th:text="${msg}" style="color:red" ></span><br/>
+            <div class="btn-group">
+                <button type="button" class="btn btn-light" onclick="clearForm()">清空</button>
+                <button type="submit" class="btn btn-info" onclick="submitForm()">确定</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{'/js/manageHome.js'}"></script>
+<script th:src="@{'/js/manage/like.js'}"></script>
+</body>
+</html>

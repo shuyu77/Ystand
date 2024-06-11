@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: Y-stand
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/y_stand
+  # 关闭Thymeleaf的缓存，网页即时更新
+  thymeleaf:
+    cache:
+      false
+  devtools:
+    restart:
+      # 配置热部署
+      enabled: true
+      #设置重启的目录
+      additional-paths: resources/**,static/**,templates/**
+      #该目录下的内容修改不重启
+      exclude: data/**
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+server:
+  port: 7712
+
+  #mybatis-plus配置控制台打印完整带参数SQL语句
+  mybatis-plus:
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

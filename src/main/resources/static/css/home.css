@@ -1,0 +1,228 @@
+a{
+  text-decoration: none;
+  /* 去除默认的下划线 */
+  outline: none;
+  /* 去除旧版浏览器的点击后的外虚线框 */
+  color: #000;
+  /* 去除默认的颜色和点击后变化的颜色 */
+}
+
+.nav-top{
+  background-image: url(/images/img.png);
+  background-size: 100% 100%;
+  height: 200px;
+}
+
+.nav-top-bar1{
+  height: 50px;
+  color:#627c97
+}
+
+.nav-top-bar2{
+  height: 50px;
+}
+.nav-top-bar3{
+  height: 50px;
+}
+
+.video-logo{
+  height: 24px;
+}
+
+.button1{
+  background-color: #627c97;
+  width: 100px;
+}
+
+.button-search{
+  background-image: url(/images/img.png);
+}
+
+.navbar-nav .nav-item {
+  margin-right: 10px; /* 设置右侧间距 */
+}
+
+.input-group {
+  position: relative; /* 确保子元素可以绝对定位 */
+}
+
+.input-group-addon {
+  position: relative; /* 修改为相对定位 */
+  right: auto; /* 取消绝对定位的right值 */
+  top: auto; /* 取消绝对定位的top值 */
+  bottom: auto; /* 取消绝对定位的bottom值 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  margin-left: -60px; /* 调整addon与输入框的距离，值根据实际情况调整 */
+  z-index: auto; /* 默认层级，不需要特别指定 */
+}
+
+
+.avatar-kuang{
+  width: 48px;
+  height: 40px;
+  position: relative;
+  /* 添加定位属性 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 100% 100%;
+}
+
+.external-image {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 105;
+}
+
+.inner-image {
+  /* 保留这行或者移除 */
+  width: 94%;
+  height: 94%;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 101;
+  border-radius: 50%;
+}
+
+.card-mid{
+  padding: 0 8rem;
+}
+
+.carousel1{
+  width: 40%;
+}
+.carousel-inner {
+  width: 100%; /* 轮播容器占据父容器的100%宽度 */
+  height: 85%; /* 轮播容器占据父容器的100%高度 */
+}
+
+.carousel-item {
+  width: 100%; /* 轮播项目占据轮播容器的100%宽度 */
+  height: 100%; /* 轮播项目占据轮播容器的100%高度 */
+}
+
+.carousel-item img {
+  width: 100%; /* 图片占据轮播项目的100%宽度 */
+  height: 100%; /* 图片占据轮播项目的100%高度 */
+  background-size: 100% 100%;
+}
+
+.video-images img {
+  width: 100%; /* 图片占据父元素的100%宽度 */
+  height: 150px; /* 图片占据父元素的100%高度 */
+  background-size: 100% 100%;
+}
+
+.title{
+  max-height: 48px;
+  min-height: 48px;
+}
+
+.time-font-size{
+  font-size: 0.8rem;
+}
+
+.video-all .col-md-4{
+  width: 20%;
+  margin-bottom: 20px;
+}
+
+.video-all img {
+  width: 100%; /* 图片占据父元素的100%宽度 */
+  height: 150px; /* 图片占据父元素的100%高度 */
+  background-size: 100% 100%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  display: none;
+}
+
+.login-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 0 20px 20px 20px;
+  border: 1px solid #ccc;
+  z-index: 999;
+  border-radius: 10px; /* 添加圆角 */
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close {
+  align-self: flex-end;
+  cursor: pointer;
+  font-size: 24px; /* 增加字体大小 */
+  transition: transform 0.3s ease; /* 添加过渡效果 */
+}
+
+.form-group-all{
+  border: gray solid 1px;
+  margin: 20px 0px;
+  border-radius: 10px;
+}
+
+.form-group {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  padding: 0 1rem;
+  gap: 20px;
+
+}
+
+.form-group .login-input {
+  border: none; /* 去掉输入框的边框 */
+  outline: none; /* 去掉输入框的默认轮廓样式 */
+  width: 300px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.font-line{
+  line-height: 50px;
+}
+
+.form-group input::placeholder {
+  color: #999; /* 设置输入框占位文字颜色 */
+  font-size: 14px; /* 设置输入框占位文字大小 */
+}
+
+.images-line{
+  width: 100%;
+  height: 90px;
+}
+
+.images{
+  height: 80px;
+  width: 100px;
+}
+
+.video-picture{
+  border-radius: 10px;
+}
+
+.carousel1{
+  height: 465px;
+}

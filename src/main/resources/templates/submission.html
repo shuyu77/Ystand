@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Y-stand</title>
+    <div th:replace="~{common::head(title=~{::title/text()})}"></div>
+<!--    <link rel="stylesheet" th:href="@{/css/manageHome.css}" />-->
+    <link rel="stylesheet" th:href="@{/css/submission.css}" />
+</head>
+<body>
+<div class="manage">
+    <div th:replace="common::manageMenu(false)"></div>
+    <div class="right">
+        <div th:replace="common :: topMenu"></div>
+
+        <div class="right-content">
+            <form th:action="@{/insertOrUpdateVideo}" th:object="${video}" method="post"
+                  enctype="multipart/form-data" class="form-popup" id="iOrUForm">
+                <div class="form-group-video">
+                    <div class="form-group-content">
+                        <div class="form-group-top">
+                            <div class="font-line">标&emsp;&emsp;题</div>
+                            <input class="form-input" type="text" placeholder="请输入标题" name="password"
+                                   th:field="*{title}">
+                        </div>
+                        <div class="form-group-description">
+                            <div class="font-line">描&emsp;&emsp;述</div>
+                            <textarea name="description" class="form-input-description" th:field="*{description}"
+                                      placeholder="请输入描述" style="resize:none;"></textarea>
+                        </div>
+                        <div class="form-group-top">
+                            <div class="font-line">封&emsp;&emsp;面</div>
+                            <!--                        先上传头像再回调-->
+                            <img class="images" width="300px" height="200px" th:src="@{${filename}}" onclick="openFile_images()" id = "image">
+                            <input type="file" name="file" accept="image/*" style="display: none;" th:field="*{images}">
+                        </div>
+                    </div>
+                    <div class="form-group-video-content" onclick="openFile()">
+                        <div class="font-line">视&emsp;&emsp;频</div>
+                        <video id="videoPlayer" class="form-video" controls >
+                            <source type="video/mp4" id="videoSource">
+                        </video>
+                        <input type="file" name="file" style="display: none;" accept="video/*"
+                               onchange="loadVideo(this)" th:field="*{video}">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-light" onclick="clearForm()">清空</button>
+                    <button type="submit" class="btn btn-info" onclick="submitForm()">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{'/js/submission.js'}"></script>
+</body>
+</html>

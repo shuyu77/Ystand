@@ -1,0 +1,18 @@
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.font-line{
+    line-height: 50px;
+}
+
+.form-group input::placeholder {
+    color: #999; /* 设置输入框占位文字颜色 */
+    font-size: 14px; /* 设置输入框占位文字大小 */
+}
+
+.images{
+    height: 80px;
+}
